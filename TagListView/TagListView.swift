@@ -82,7 +82,7 @@ open class TagListView: UIView {
     @IBInspectable open dynamic var borderColor: UIColor? {
         didSet {
             tagViews.forEach {
-                $0.borderColor = borderColor
+                $0.customBorderColor = borderColor
             }
         }
     }
@@ -338,7 +338,7 @@ open class TagListView: UIView {
         tagView.titleLineBreakMode = tagLineBreakMode
         tagView.cornerRadius = cornerRadius
         tagView.borderWidth = borderWidth
-        tagView.borderColor = borderColor
+        tagView.customBorderColor = borderColor
         tagView.selectedBorderColor = selectedBorderColor
         tagView.paddingX = paddingX
         tagView.paddingY = paddingY

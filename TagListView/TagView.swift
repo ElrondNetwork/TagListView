@@ -23,7 +23,7 @@ open class TagView: UIButton {
         }
     }
     
-    @IBInspectable open var borderColor: UIColor? {
+    @IBInspectable open var customBorderColor: UIColor? {
         didSet {
             reloadStyles()
         }
@@ -97,12 +97,12 @@ open class TagView: UIButton {
         }
         else if isSelected {
             backgroundColor = selectedBackgroundColor ?? tagBackgroundColor
-            layer.borderColor = selectedBorderColor?.cgColor ?? borderColor?.cgColor
+            layer.borderColor = selectedBorderColor?.cgColor ?? customBorderColor?.cgColor
             setTitleColor(selectedTextColor, for: UIControl.State())
         }
         else {
             backgroundColor = tagBackgroundColor
-            layer.borderColor = borderColor?.cgColor
+            layer.borderColor = customBorderColor?.cgColor
             setTitleColor(textColor, for: UIControl.State())
         }
     }
@@ -187,10 +187,10 @@ open class TagView: UIButton {
     override open var intrinsicContentSize: CGSize {
         var size: CGSize
         
-        if let text = titleLabel?.text, !text.isEmpty {
-            size = titleLabel?.text?.size(withAttributes: [NSAttributedString.Key.font: textFont]) ?? CGSize.zero
-        } else {
+        if titleLabel?.attributedText != nil {
             size = titleLabel?.attributedText?.size() ?? CGSize.zero
+        } else {
+            size = titleLabel?.text?.size(withAttributes: [NSAttributedString.Key.font: textFont]) ?? CGSize.zero
         }
         
         size.height = textFont.pointSize + paddingY * 2
