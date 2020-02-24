@@ -79,10 +79,10 @@ open class TagListView: UIView {
         }
     }
     
-    @IBInspectable open dynamic var borderColor: UIColor? {
+    @IBInspectable open dynamic var customBorderColor: UIColor? {
         didSet {
             tagViews.forEach {
-                $0.customBorderColor = borderColor
+                $0.customBorderColor = customBorderColor
             }
         }
     }
@@ -338,7 +338,7 @@ open class TagListView: UIView {
         tagView.titleLineBreakMode = tagLineBreakMode
         tagView.cornerRadius = cornerRadius
         tagView.borderWidth = borderWidth
-        tagView.customBorderColor = borderColor
+        tagView.customBorderColor = customBorderColor
         tagView.selectedBorderColor = selectedBorderColor
         tagView.paddingX = paddingX
         tagView.paddingY = paddingY
@@ -347,6 +347,12 @@ open class TagListView: UIView {
         tagView.removeButtonIconSize = removeButtonIconSize
         tagView.enableRemoveButton = enableRemoveButton
         tagView.removeIconLineColor = removeIconLineColor
+        setupTagViewInteraction(tagView)
+        
+        return tagView
+    }
+    
+    func setupTagViewInteraction(_ tagView: TagView) {
         tagView.addTarget(self, action: #selector(tagPressed(_:)), for: .touchUpInside)
         tagView.removeButton.addTarget(self, action: #selector(removeButtonPressed(_:)), for: .touchUpInside)
         
@@ -356,8 +362,6 @@ open class TagListView: UIView {
                 $0.isSelected = $0 == this
             }
         }
-        
-        return tagView
     }
 
     @discardableResult
@@ -374,6 +378,7 @@ open class TagListView: UIView {
     @discardableResult
     open func addTagView(_ tagView: TagView) -> TagView {
         defer { rearrangeViews() }
+        setupTagViewInteraction(tagView)
         tagViews.append(tagView)
         tagBackgroundViews.append(UIView(frame: tagView.bounds))
         
@@ -397,6 +402,7 @@ open class TagListView: UIView {
     @discardableResult
     open func insertTagView(_ tagView: TagView, at index: Int) -> TagView {
         defer { rearrangeViews() }
+        setupTagViewInteraction(tagView)
         tagViews.insert(tagView, at: index)
         tagBackgroundViews.insert(UIView(frame: tagView.bounds), at: index)
         
