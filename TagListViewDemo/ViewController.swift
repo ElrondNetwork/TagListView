@@ -66,8 +66,8 @@ class ViewController: UIViewController, TagListViewDelegate {
         tagView.isSelected = !tagView.isSelected
     }
     
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        print("Tag Remove pressed: \(title), \(sender)")
+    func tagRemoveButtonPressed(_ title: String, tagView: TagView, tagIndex: Int, sender: TagListView) {
+        print("Tag Remove pressed: \(title), \(sender), \(tagIndex)")
         sender.removeTagView(tagView)
     }
 }
