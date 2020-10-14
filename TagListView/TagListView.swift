@@ -164,7 +164,7 @@ open class TagListView: UIView {
         }
     }
     
-    @IBInspectable open dynamic var removeButtonIconSize: CGFloat = 12 {
+    @IBInspectable open dynamic var removeButtonIconSize: CGFloat = 6 {
         didSet {
             defer { rearrangeViews() }
             tagViews.forEach {

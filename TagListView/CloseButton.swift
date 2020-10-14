@@ -10,10 +10,16 @@ import UIKit
 
 internal class CloseButton: UIButton {
 
-    var iconSize: CGFloat = 10
+    var buttonSize: CGFloat = 16
+    override var backgroundColor: UIColor? {
+        didSet {
+            layer.backgroundColor = backgroundColor?.cgColor
+        }
+    }
+    var iconSize: CGFloat = 5
     var lineWidth: CGFloat = 1
     var lineColor: UIColor = UIColor.white.withAlphaComponent(0.54)
-
+    
     weak var tagView: TagView?
 
     override func draw(_ rect: CGRect) {
@@ -37,6 +43,9 @@ internal class CloseButton: UIButton {
         lineColor.setStroke()
 
         path.stroke()
+        layer.cornerRadius = buttonSize / 2
+        layer.masksToBounds = true
+        
     }
 
 }

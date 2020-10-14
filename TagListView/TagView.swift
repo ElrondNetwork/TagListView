@@ -130,14 +130,26 @@ open class TagView: UIButton {
         }
     }
     
-    @IBInspectable open var removeButtonIconSize: CGFloat = 12 {
+    @IBInspectable open var removeButtonBackgroundColor: UIColor = .gray {
+        didSet {
+            removeButton.backgroundColor = removeButtonBackgroundColor
+        }
+    }
+    @IBInspectable open var removeButtonIconSize: CGFloat = 1 {
         didSet {
             removeButton.iconSize = removeButtonIconSize
             updateRightInsets()
         }
     }
     
-    @IBInspectable open var removeIconLineWidth: CGFloat = 3 {
+    @IBInspectable open var removeButtonSize: CGFloat = 16 {
+        didSet {
+            removeButton.buttonSize = removeButtonSize
+            updateRightInsets()
+        }
+    }
+    
+    @IBInspectable open var removeIconLineWidth: CGFloat = 1 {
         didSet {
             removeButton.lineWidth = removeIconLineWidth
         }
@@ -172,6 +184,7 @@ open class TagView: UIButton {
 
         frame.size = intrinsicContentSize
         addSubview(removeButton)
+        removeButton.backgroundColor = removeButtonBackgroundColor
         removeButton.tagView = self
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress))
@@ -199,14 +212,14 @@ open class TagView: UIButton {
             size.width = size.height
         }
         if enableRemoveButton {
-            size.width += removeButtonIconSize + paddingX
+            size.width += removeButtonSize + paddingX
         }
         return size
     }
     
     private func updateRightInsets() {
         if enableRemoveButton {
-            titleEdgeInsets.right = paddingX  + removeButtonIconSize + paddingX
+            titleEdgeInsets.right = paddingX  + removeButtonSize + paddingX
         }
         else {
             titleEdgeInsets.right = paddingX
@@ -216,10 +229,10 @@ open class TagView: UIButton {
     open override func layoutSubviews() {
         super.layoutSubviews()
         if enableRemoveButton {
-            removeButton.frame.size.width = paddingX + removeButtonIconSize + paddingX
-            removeButton.frame.origin.x = self.frame.width - removeButton.frame.width
-            removeButton.frame.size.height = self.frame.height
-            removeButton.frame.origin.y = 0
+            removeButton.frame.size.width = removeButtonSize
+            removeButton.frame.origin.x = self.frame.width - removeButtonSize - paddingX
+            removeButton.frame.size.height = removeButtonSize
+            removeButton.center.y = center.y
         }
     }
 }
